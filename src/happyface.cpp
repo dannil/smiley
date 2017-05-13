@@ -55,8 +55,8 @@ int main(int argc, char* argv[]) {
 	to_b[":-("] = "-";
 	to_b[":O"] = ".";
 	to_b[";)"] = ",";
-	to_b["<3"] = "]";
-	to_b["</3"] = "[";
+	to_b[":["] = "[";
+	to_b[":]"] = "]";
 
 	map<string, string> to_s;
 	to_s[">"] = ":>";
@@ -65,8 +65,8 @@ int main(int argc, char* argv[]) {
 	to_s["-"] = ":-(";
 	to_s["."] = ":O";
 	to_s[","] = ";)";
-	to_s["]"] = "<3";
-	to_s["["] = "</3";
+	to_s["["] = ":[";
+	to_s["]"] = ":]";
 
 	map<string, string> m = (transpiler_mode == "to_b" ? to_b : to_s);
 
