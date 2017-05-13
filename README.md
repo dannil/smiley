@@ -2,7 +2,7 @@
 
 Converts Brainfuck into pretty smileys and vice versa. 
 
-Why? That's the wrong question to ask. Why not? That's more like it.
+Why? Because we can!
 
 ## Usage
 
@@ -24,10 +24,10 @@ These instructions assume the binary is named 'smiley'.
 
 Brainfuck | Smiley
  --- | --- 
- `+` | `:>`
- `-` | `:<`
- `>` | `:-)`
- `<` | `:-(`
+ `>` | `:>`
+ `<` | `:<`
+ `+` | `:-)`
+ `-` | `:-(`
  `[` | `:O`
  `]` | `;)`
  `.` | `<3`
