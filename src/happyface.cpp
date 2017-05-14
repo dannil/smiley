@@ -7,13 +7,11 @@
 using std::string;
 
 string get_argument(int argc, char* argv[], string argument_to_find) {
-	string argument;
+	string argument = "";
 	for (int i = 1; i < argc; ++i) {
 		if (string(argv[i]) == argument_to_find) {
 			if (i + 1 < argc) {
 				argument = argv[++i];
-			} else {
-				argument = "";
 			}
 		}
 	}
@@ -36,15 +34,13 @@ int main(int argc, char* argv[]) {
 		if (output_file.substr(output_file.find_last_of(".") + 1) == "b") {
 			// Output file ends with b, defaulting Smiley to Brainfuck mode
 			transpiler_mode = TO_BRAINFUCK;
-		} else if (output_file.substr(output_file.find_last_of(".") + 1)
-				== "s") {
+		} else if (output_file.substr(output_file.find_last_of(".") + 1) == "s") {
 			// Output file ends with s, defaulting Brainfuck to Smiley mode
 			transpiler_mode = TO_SMILEY;
 		} else {
 			std::cerr << "Please specify transcompile mode with -c flag." << std::endl;
 		}
-	} else if (transpiler_mode != TO_BRAINFUCK
-			&& transpiler_mode != TO_SMILEY) {
+	} else if (transpiler_mode != TO_BRAINFUCK && transpiler_mode != TO_SMILEY) {
 		std::cerr << "Please specify a valid transcompile mode." << std::endl;
 	}
 
@@ -72,12 +68,11 @@ int main(int argc, char* argv[]) {
 
 	std::ifstream in;
 	in.open(input_file);
-
 	if (in.is_open()) {
 		string result;
 		string line;
 		if (transpiler_mode == TO_BRAINFUCK) {
-			while (std::getline(in, line)) {
+			while (getline(in, line)) {
 				// Transcompile Smiley to Brainfuck
 				std::stringstream ss(line);
 				string c;
@@ -89,16 +84,14 @@ int main(int argc, char* argv[]) {
 			while (getline(in, line)) {
 				// Transcompile Brainfuck to Smiley
 				for (size_t i = 0; i < line.size(); ++i) {
-					string c(1, line[i]);
-					result += m[c] + " ";
+					result += m[string(1, line[i])] + " ";
 				}
 			}
 		}
 
 		std::ofstream out;
 		if (output_file == "") {
-			string extension = (transpiler_mode == TO_BRAINFUCK ? ".b" : ".s");
-			output_file = "output" + extension;
+			output_file = string("output") + (transpiler_mode == TO_BRAINFUCK ? ".b" : ".s");
 		}
 		out.open(output_file);
 		out << result << std::endl;
