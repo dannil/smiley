@@ -1,7 +1,6 @@
 #include <fstream>
 #include <iostream>
 #include <map>
-#include <sstream>
 #include <string>
 
 using std::string;
@@ -69,34 +68,28 @@ int main(int argc, char* argv[]) {
 	std::ifstream in;
 	in.open(input_file);
 	if (in.is_open()) {
-		string result;
-		string line;
+		size_t incrementer = 1;
 		if (transpiler_mode == TO_BRAINFUCK) {
-			while (getline(in, line)) {
-				// Transcompile Smiley to Brainfuck
-				std::stringstream ss(line);
-				string c;
-				while (getline(ss, c, ' ')) {
-					result += m[c];
-				}
-			}
-		} else if (transpiler_mode == TO_SMILEY) {
-			while (getline(in, line)) {
-				// Transcompile Brainfuck to Smiley
-				for (size_t i = 0; i < line.size(); ++i) {
-					result += m[string(1, line[i])] + " ";
-				}
-			}
+			incrementer = 2;
 		}
-
 		std::ofstream out;
 		if (output_file == "") {
 			output_file = string("output") + (transpiler_mode == TO_BRAINFUCK ? ".b" : ".s");
 		}
 		out.open(output_file);
-		out << result << std::endl;
+		string line;
+		while (getline(in, line)) {
+			string result = "";
+			for (size_t i = 0; i < line.size(); i += incrementer) {
+				string c = "";
+				for (size_t j = i; j < i + incrementer; j++) {
+					c += line[j];
+				}
+				result += m[c];
+			}
+			out << result << std::endl;
+		}
 		out.close();
 	}
-
 	return 0;
 }
